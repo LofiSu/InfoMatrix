@@ -1,16 +1,16 @@
-import * as React from "react"
-import Image from "next/image"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const Avatar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
-    src?: string
-    alt?: string
-    fallback?: string
+    src?: string;
+    alt?: string;
+    fallback?: string;
   }
 >(({ className, src, alt, fallback, children, ...props }, ref) => {
-  const [imgError, setImgError] = React.useState(false)
+  const [imgError, setImgError] = React.useState(false);
 
   return (
     <div
@@ -35,10 +35,8 @@ const Avatar = React.forwardRef<
         </div>
       )}
     </div>
-  )
-})
-Avatar.displayName = "Avatar"
+  );
+});
+Avatar.displayName = "Avatar";
 
-export { Avatar }
-
- 
+export { Avatar };
