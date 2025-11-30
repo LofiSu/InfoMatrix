@@ -551,13 +551,19 @@ All complex algorithms (especially in Python Agents) include:
 
 ## 🤝 Contributing
 
-This is an academic research project. For contributions:
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) and [Issue Guide](.github/ISSUE_GUIDE.md) before submitting PRs or issues.
 
+Quick start:
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+For detailed guidelines, see:
+- [Contributing Guide](CONTRIBUTING.md) - How to contribute code
+- [Issue Guide](.github/ISSUE_GUIDE.md) - How to submit issues
+- [Foundation Tasks](.github/FOUNDATION_TASKS.md) - Current development tasks
 
 ---
 
@@ -1103,13 +1109,19 @@ pnpm run build
 
 ## 🤝 贡献
 
-这是一个学术研究项目。如需贡献：
+我们欢迎贡献！在提交 PR 或 Issue 之前，请阅读我们的[贡献指南](CONTRIBUTING.md)和[Issue 指南](.github/ISSUE_GUIDE.md)。
 
+快速开始：
 1. Fork 仓库
 2. 创建功能分支（`git checkout -b feature/amazing-feature`）
-3. 提交更改（`git commit -m 'Add amazing feature'`）
+3. 提交更改（`git commit -m 'feat: add amazing feature'`）
 4. 推送到分支（`git push origin feature/amazing-feature`）
 5. 打开 Pull Request
+
+详细指南：
+- [贡献指南](CONTRIBUTING.md) - 如何贡献代码
+- [Issue 指南](.github/ISSUE_GUIDE.md) - 如何提交 Issue
+- [基础功能任务](.github/FOUNDATION_TASKS.md) - 当前开发任务
 
 ---
 

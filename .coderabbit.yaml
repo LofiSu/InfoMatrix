@@ -1,0 +1,110 @@
+# CodeRabbit Configuration for InfoMatrix
+# This file configures CodeRabbit AI code review behavior
+
+# Review settings
+review:
+  # Review simple changes (e.g., typo fixes)
+  simple_changes: false
+  
+  # Comment "LGTM" on approved PRs
+  comment_lgtm: false
+  
+  # Post review status comment
+  status_comment: true
+  
+  # Post status comment even when there are no changes
+  status_comment_without_changes: false
+
+# Review summary settings
+review_summary:
+  # Enable review summaries
+  enabled: true
+  
+  # Summary comment title
+  title: "## 🤖 CodeRabbit AI Review Summary"
+  
+  # Include summary in comment
+  include_summary: true
+  
+  # Include review score
+  include_score: true
+  
+  # Include metrics
+  include_metrics: true
+  
+  # Include rating
+  include_rating: true
+  
+  # Include breakdown
+  include_breakdown: true
+  
+  # Include highlights
+  include_highlights: true
+  
+  # Include concerns
+  include_concerns: true
+  
+  # Include suggestions
+  include_suggestions: true
+  
+  # Include improvements
+  include_improvements: true
+
+# File review limits
+limits:
+  # Maximum number of files to review
+  max_files_to_review: 50
+  
+  # Maximum number of files to summarize
+  max_files_to_summarize: 20
+  
+  # Maximum review prompt length
+  max_review_prompt_length: 8000
+  
+  # Maximum summary prompt length
+  max_summary_prompt_length: 4000
+
+# Path filters
+path_filters:
+  include:
+    - "**/*.ts"
+    - "**/*.tsx"
+    - "**/*.py"
+    - "**/*.js"
+    - "**/*.jsx"
+  exclude:
+    - "**/*.test.ts"
+    - "**/*.test.tsx"
+    - "**/*.spec.ts"
+    - "**/*.spec.tsx"
+    - "**/node_modules/**"
+    - "**/.next/**"
+    - "**/dist/**"
+    - "**/build/**"
+
+# Review prompt customization
+review_prompt:
+  extra: |
+    Please review the code following InfoMatrix project conventions:
+    - TypeScript/Type safety best practices
+    - Next.js 14 App Router patterns
+    - Proper error handling
+    - Security considerations
+    - Code maintainability
+    - Academic terminology in comments (for thesis/patent)
+    - Python code should follow PEP 8 and include type hints
+    - Complex algorithms must have documentation explaining methodology
+
+# Language settings
+language: en
+
+# Comment settings
+comments:
+  # Enable inline comments
+  enabled: true
+  
+  # Require approval for comments
+  require_approval: false
+  
+  # Require changes for comments
+  require_changes: false

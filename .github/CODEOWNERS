@@ -1,0 +1,34 @@
+# Code Owners
+# 定义代码审查的责任人
+# 语法: 路径 用户名或团队名
+
+# 全局默认审查者
+* @LofiSu
+
+# 前端代码
+/app/ @LofiSu
+/components/ @LofiSu
+/lib/ @LofiSu
+
+# 后端 API
+/api/ @LofiSu
+
+# Python 代码
+/api/py/ @LofiSu
+*.py @LofiSu
+
+# 数据库 Schema
+/supabase/ @LofiSu
+*.sql @LofiSu
+
+# 配置文件
+*.config.* @LofiSu
+package.json @LofiSu
+tsconfig.json @LofiSu
+
+# GitHub 工作流
+/.github/ @LofiSu
+
+# 文档
+*.md @LofiSu
+/docs/ @LofiSu

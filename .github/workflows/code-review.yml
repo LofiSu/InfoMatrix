@@ -1,0 +1,103 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    name: AI Code Review
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # OpenAI PR Reviewer (使用 OpenAI API)
+      - name: Run OpenAI PR Reviewer
+        if: secrets.OPENAI_API_KEY != ''
+        uses: coderabbitai/openai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          review_simple_changes: false
+          review_comment_lgtm: false
+          path_filters: |
+            **/*.ts
+            **/*.tsx
+            **/*.py
+            **/*.js
+            **/*.jsx
+          system_message: |
+            You are an expert code reviewer for InfoMatrix, a Serverless Multi-Agent Content Intelligence System.
+
+            Review Guidelines:
+            1. Check for TypeScript/Type safety issues
+            2. Verify Next.js 14 App Router best practices
+            3. Ensure proper error handling
+            4. Check for security vulnerabilities
+            5. Verify code follows project conventions (see .cursorrules)
+            6. Check Python code follows PEP 8 and has type hints
+            7. Ensure proper documentation for complex algorithms
+
+            Focus Areas:
+            - Type safety and null checks
+            - Performance optimizations
+            - Security best practices
+            - Code maintainability
+            - Academic terminology in comments (for thesis/patent)
+
+      # CodeRabbit AI Review (推荐使用 GitHub App，也支持 API Key)
+      - name: Run CodeRabbit AI Review
+        if: secrets.CODERABBIT_API_KEY != '' || secrets.CODERABBIT_APP_ID != ''
+        uses: coderabbitai/coderabbit-action@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY }}
+          CODERABBIT_APP_ID: ${{ secrets.CODERABBIT_APP_ID }}
+          CODERABBIT_APP_PRIVATE_KEY: ${{ secrets.CODERABBIT_APP_PRIVATE_KEY }}
+        with:
+          path_filters: |
+            **/*.ts
+            **/*.tsx
+            **/*.py
+            **/*.js
+            **/*.jsx
+          review_simple_changes: false
+          review_comment_lgtm: false
+          review_status_comment: true
+          enable_review_summaries: true
+          review_summary_comment_title: "## 🤖 CodeRabbit AI Review Summary"
+          max_files_to_review: 50
+          max_files_to_summarize: 20
+          review_prompt_extra: |
+            Please review the code following InfoMatrix project conventions:
+            - TypeScript/Type safety best practices
+            - Next.js 14 App Router patterns
+            - Proper error handling
+            - Security considerations
+            - Code maintainability
+            - Academic terminology in comments (for thesis/patent)
+          language: en
