@@ -27,15 +27,15 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.17",
     "dotenv": "^17.2.3",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.2.0",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.0.5",
     "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^4.1.17",
     "tsx": "^4.20.6",
     "typescript": "^5.3.3"
   }
