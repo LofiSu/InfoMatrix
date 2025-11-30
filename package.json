@@ -10,6 +10,7 @@
     "check-config": "tsx scripts/check-config.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^2.0.74",
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^5.17.0",

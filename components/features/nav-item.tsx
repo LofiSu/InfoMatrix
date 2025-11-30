@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { LucideIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import Link from "next/link";
+import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface NavItemProps {
-  icon: LucideIcon
-  label: string
-  href: string
-  isActive?: boolean
-  badge?: string
-  onClick?: () => void
+  icon: LucideIcon;
+  label: string;
+  href: string;
+  isActive?: boolean;
+  badge?: string;
+  onClick?: () => void;
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
@@ -27,22 +27,24 @@ export const NavItem: React.FC<NavItemProps> = ({
       href={href}
       onClick={onClick}
       className={cn(
-        "flex flex-col items-center justify-center gap-1 rounded-lg p-2 transition-colors",
+        "group flex flex-col items-center justify-center gap-1 rounded-lg p-2 transition-all duration-300 ease-out",
+        "hover:scale-105 hover:shadow-md",
         isActive
-          ? "bg-accent text-accent-foreground"
-          : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+          ? "bg-secondary text-foreground shadow-sm"
+          : "text-foreground hover:bg-secondary/50"
       )}
     >
-      <div className="relative">
-        <Icon className="h-5 w-5" />
+      <div className="relative transition-transform duration-300 ease-out group-hover:scale-110">
+        <Icon className="h-5 w-5 transition-all duration-300 ease-out" />
         {badge && (
-          <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+          <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground transition-transform duration-300 ease-out group-hover:scale-110">
             {badge}
           </span>
         )}
       </div>
-      <span className="text-xs">{label}</span>
+      <span className="text-xs transition-all duration-300 ease-out">
+        {label}
+      </span>
     </Link>
-  )
-}
-
+  );
+};

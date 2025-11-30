@@ -1,190 +1,138 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import {
-  Home,
-  Compass,
-  Boxes,
-  TrendingUp,
-  Bell,
-  ChevronDown,
-  ArrowUpRight,
-  Plus,
-  Pin,
-  Briefcase,
-  GraduationCap,
-  Activity,
-} from "lucide-react"
-import { NavItem } from "./nav-item"
-import { Avatar } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-
-interface SidebarSection {
-  title: string
-  items: Array<{
-    icon: React.ComponentType<{ className?: string }>
-    label: string
-    href: string
-  }>
-}
-
-const sidebarSections: Record<string, SidebarSection> = {
-  home: {
-    title: "Home",
-    items: [
-      { icon: Briefcase, label: "Travel", href: "/home/travel" },
-      { icon: GraduationCap, label: "Academic", href: "/home/academic" },
-      { icon: Activity, label: "Sports", href: "/home/sports" },
-    ],
-  },
-  discover: {
-    title: "Discover",
-    items: [
-      { icon: Compass, label: "For You", href: "/discover/for-you" },
-      { icon: TrendingUp, label: "Top", href: "/discover/top" },
-    ],
-  },
-}
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Home, Compass, Boxes, Bell, ArrowUpRight, Plus } from "lucide-react";
+import { NavItem } from "./nav-item";
+import { SidebarDrawer } from "./sidebar-drawer";
+import { AuthButton } from "./auth-button";
+import { Button } from "@/components/ui/button";
 
 export const Sidebar: React.FC = () => {
-  const pathname = usePathname()
-  const [activeSection, setActiveSection] = React.useState<string | null>(null)
+  const pathname = usePathname();
+  const [hoveredSection, setHoveredSection] = React.useState<string | null>(
+    null
+  );
+  const [activeSection, setActiveSection] = React.useState<string | null>(null);
 
   // Determine active section based on pathname
   React.useEffect(() => {
     if (pathname?.startsWith("/home")) {
-      setActiveSection("home")
+      setActiveSection("home");
     } else if (pathname?.startsWith("/discover")) {
-      setActiveSection("discover")
+      setActiveSection("discover");
     } else if (pathname?.startsWith("/spaces")) {
-      setActiveSection("spaces")
-    } else if (pathname?.startsWith("/finance")) {
-      setActiveSection("finance")
+      setActiveSection("spaces");
     } else {
-      setActiveSection("home")
+      setActiveSection("home");
     }
-  }, [pathname])
+  }, [pathname]);
 
-  const isActive = (href: string) => pathname === href
+  const isActive = (href: string) => pathname === href;
+
+  // Sections that have drawer menus
+  const sectionsWithDrawer = ["home", "discover"];
+
+  const handleNavItemMouseEnter = (section: string) => {
+    if (sectionsWithDrawer.includes(section)) {
+      setHoveredSection(section);
+    }
+  };
+
+  const handleNavItemMouseLeave = () => {
+    setHoveredSection(null);
+  };
 
   return (
-    <aside className="flex h-screen w-20 flex-col items-center border-r border-border bg-background py-4">
-      {/* Logo */}
-      <div className="mb-6 flex items-center justify-center">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-          <div className="h-6 w-6 rounded-full bg-primary"></div>
-        </div>
-      </div>
-
-      {/* Section with Pin - Only show when on home or discover */}
-      {activeSection && sidebarSections[activeSection] && (
-        <div className="mb-4 w-full px-2">
-          <div className="flex items-center justify-between px-2 mb-2">
-            <span className="text-xs font-semibold text-foreground">
-              {sidebarSections[activeSection].title}
-            </span>
-            <Pin className="h-3 w-3 text-muted-foreground" />
-          </div>
-          <div className="space-y-1">
-            {sidebarSections[activeSection].items.map((item) => {
-              const Icon = item.icon
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs transition-colors",
-                    isActive(item.href)
-                      ? "bg-accent text-accent-foreground"
-                      : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{item.label}</span>
-                </Link>
-              )
-            })}
+    <>
+      <aside className="relative flex h-screen w-20 flex-col items-center border-r border-border bg-background py-4">
+        {/* Logo */}
+        <div className="mb-6 flex items-center justify-center">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
+            <div className="h-6 w-6 rounded-full bg-foreground"></div>
           </div>
         </div>
-      )}
 
-      {/* Add Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="mb-6 h-12 w-12 rounded-full border-2 border-dashed border-muted-foreground/30 hover:border-primary hover:bg-primary/10"
-      >
-        <Plus className="h-5 w-5" />
-      </Button>
-
-      {/* Main Navigation */}
-      <nav className="flex flex-1 flex-col gap-2">
-        <NavItem
-          icon={Home}
-          label="Home"
-          href="/"
-          isActive={isActive("/") || pathname?.startsWith("/home")}
-        />
-        <NavItem
-          icon={Compass}
-          label="Discover"
-          href="/discover"
-          isActive={pathname?.startsWith("/discover")}
-        />
-        <NavItem
-          icon={Boxes}
-          label="Spaces"
-          href="/spaces"
-          isActive={pathname?.startsWith("/spaces")}
-        />
-        <NavItem
-          icon={TrendingUp}
-          label="Finance"
-          href="/finance"
-          isActive={pathname?.startsWith("/finance")}
-        />
-      </nav>
-
-      {/* Bottom Section */}
-      <div className="flex flex-col gap-2">
-        <Button variant="ghost" size="icon" className="h-10 w-10">
-          <Bell className="h-5 w-5" />
+        {/* Add Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="group mb-6 h-12 w-12 rounded-full border-2 border-dashed border-foreground/30 bg-popover transition-all duration-300 ease-out hover:border-foreground hover:bg-secondary hover:scale-110 hover:shadow-md"
+        >
+          <Plus className="h-5 w-5 text-foreground transition-transform duration-300 ease-out group-hover:rotate-90" />
         </Button>
 
-        <div className="flex flex-col items-center gap-1">
-          <div className="relative">
-            <Button variant="ghost" size="icon" className="h-10 w-10 p-0">
-              <Avatar className="h-8 w-8 border-2 border-background">
-                <Badge
-                  variant="default"
-                  className="absolute -bottom-0.5 -right-0.5 h-4 w-8 rounded-full px-1 text-[10px]"
-                >
-                  pro
-                </Badge>
-              </Avatar>
-            </Button>
-            <ChevronDown className="absolute -right-1 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground" />
+        {/* Main Navigation */}
+        <nav className="flex flex-1 flex-col gap-2">
+          <div
+            onMouseEnter={() => handleNavItemMouseEnter("home")}
+            onMouseLeave={handleNavItemMouseLeave}
+          >
+            <NavItem
+              icon={Home}
+              label="Home"
+              href="/"
+              isActive={isActive("/") || pathname?.startsWith("/home")}
+            />
           </div>
-          <span className="text-[10px] text-muted-foreground">Account</span>
-        </div>
+          <div
+            onMouseEnter={() => handleNavItemMouseEnter("discover")}
+            onMouseLeave={handleNavItemMouseLeave}
+          >
+            <NavItem
+              icon={Compass}
+              label="Discover"
+              href="/discover"
+              isActive={pathname?.startsWith("/discover")}
+            />
+          </div>
+          <NavItem
+            icon={Boxes}
+            label="Spaces"
+            href="/spaces"
+            isActive={pathname?.startsWith("/spaces")}
+          />
+        </nav>
 
-        <div className="flex flex-col items-center gap-1">
+        {/* Bottom Section */}
+        <div className="flex flex-col gap-2">
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10"
-            title="Upgrade"
+            className="group h-10 w-10 text-foreground transition-all duration-300 ease-out hover:scale-110 hover:bg-secondary"
           >
-            <ArrowUpRight className="h-5 w-5" />
+            <Bell className="h-5 w-5 transition-transform duration-300 ease-out group-hover:rotate-12" />
           </Button>
-          <span className="text-[10px] text-muted-foreground">Upgrade</span>
-        </div>
-      </div>
-    </aside>
-  )
-}
 
+          {/* Auth Button (Login/Logout) */}
+          <AuthButton />
+
+          <div className="flex flex-col items-center gap-1 group">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-10 w-10 text-foreground transition-all duration-300 ease-out hover:scale-110 hover:bg-secondary"
+              title="Upgrade"
+            >
+              <ArrowUpRight className="h-5 w-5 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Button>
+            <span className="text-[10px] text-muted-foreground transition-colors duration-300 ease-out group-hover:text-foreground">
+              Upgrade
+            </span>
+          </div>
+        </div>
+      </aside>
+
+      {/* Drawer that appears on hover */}
+      <SidebarDrawer
+        section={hoveredSection}
+        isVisible={!!hoveredSection}
+        onMouseEnter={() => {
+          // Keep drawer open when hovering over it
+        }}
+        onMouseLeave={handleNavItemMouseLeave}
+      />
+    </>
+  );
+};
