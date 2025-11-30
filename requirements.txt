@@ -7,6 +7,6 @@ langchain-openai==0.0.5
 langgraph==0.0.20
 youtube-transcript-api==0.6.1
 supabase>=2.3.4
-numpy==1.26.3
+numpy==2.3.5
 httpx>=0.24.0,<0.26.0
 
